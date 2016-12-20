@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="bigdata_interface"
+  id="myeclipse.1432783292415"
+  context-root="/bigdata_interface"
+  j2ee-spec="5.0"
+  archive="bigdata_interface.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
