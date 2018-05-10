@@ -154,6 +154,52 @@
      	$('#myLoginForm').attr("action",casUrl);
      	$('#myLoginForm').submit(); 
 	}
+	function zseduLogin(){
+		// --------------------------------------------------------------------
+		 /* $.ajax({type : "POST",
+			dataType : "json",
+			url :"http://localhost:8080/ClientTest/zseduLogin",
+			success : function(result) {
+				alert(result);
+				var data=eval(result.result);
+				alert(data+"======-----"+data.redirectUrl);
+				window.location.href="http://172.18.20.214:8083/"+data.redirectUrl;
+				
+				alert(data);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(textStatus+"*********************");
+//					alert("查询学校信息错误");
+			}
+		});  */
+		// --------------------------------------------------------------------
+		//window.location.href = "http://172.18.20.214:8083/syspurview/login.do?action=loginByEduNum?Keycode=hEFnP4n5dnvQRBitrt20JO3NA2+TMu7s&timestamptimestamp=2017-01-16";
+		// --------------------------------------------------------------------
+		$.ajax({
+			type : "post",
+			//url :"http://v.zsedu.net/syspurview/login.do?action=loginByEduNum",http://172.18.20.235:8083
+			url :"http://v.zsedu.net/syspurview/login.do?action=loginByEduNum",
+			data:{"Keycode":"hEFnP4n5dnuzEtOhyuLo3VcG1IgE8Ddk","timestamp":"2017-01-17"},
+			dataType : 'jsonp',
+			//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback) 
+			jsonp: "callback",
+			//自定义的jsonp回调函数名称"jsonpCallback"，返回的json也必须有这个函数名称
+			jsonpCallback:"callback",
+			success : function(result) {
+				alert("======-----");
+				var data=eval(result);
+				alert(data+"======-----"+data.redirectUrl);
+				window.location.href="http://v.zsedu.net"+data.redirectUrl;
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("------"+XMLHttpRequest.status);
+				alert(XMLHttpRequest.readyState);
+				alert(textStatus);
+		//			 alert("查询学校信息错误");
+			}
+		});  
+		// ---
+	}
 	</script>
   </head>
   
@@ -376,6 +422,7 @@
     <a href="http://www.spm-edu.com/Services/RedirectAppByUser?request_id=1&app_code=1&operators_code=ZSJYQT&hashcode=7F23CE2AD1ACDA10A56F1D21912FFE2D" target="_blank">go南方云教育</a>
     </br>
     <input type="button" value="获取用户信息" onclick="getUserInfo('32001');">
+    <input type="button" value="信息港登录页面" onclick="zseduLogin();">
    
   </body>
 </html>

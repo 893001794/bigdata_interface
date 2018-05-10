@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -518,6 +519,41 @@ public class ClientTestControll {
         sbUrl.append("&loginerror=http://202.96.187.34/");
         String url = "redirect:"+sbUrl.toString();   
         return new ModelAndView(url);  
+	}
+	
+	@RequestMapping("zseduLogin")  
+	public JsonView  zseduLogin(HttpServletRequest req, HttpServletResponse resp)throws Exception {
+		JsonView jsonview = new JsonView();
+		StringBuffer url = new StringBuffer();
+		url.append("http://172.18.20.214:8083/syspurview/login.do");
+		url.append("?action=loginByEduNum");
+//		url.append("&Keycode=hEFnP4n5dnvQRBitrt20JO3NA2+TMu7s");
+//		url.append("&timestamp=2017-01-16");
+		System.out.println("requestUrl:>>>"+url);
+		String responseString="";
+		HttpClient httpClient=new HttpClient();
+		System.out.println("***************"+url.toString());
+		PostMethod postMethod=new UTF8PostMethod(url.toString());
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("Keycode", "hEFnP4n5dnvQRBitrt20JO3NA2+TMu7s");
+		map.put("timestamp", "2017-01-16");
+		JSONObject myJson = new JSONObject();
+		myJson.putAll(map);
+		NameValuePair[] parametersBody = {new NameValuePair("ParaBody",myJson.toString())};
+		postMethod.setRequestBody(parametersBody);
+		httpClient.executeMethod(postMethod);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(postMethod.getResponseBodyAsStream(),"utf-8"));
+		StringBuffer stringBuffer = new StringBuffer();
+		String str = "";
+		while((str = reader.readLine())!=null){
+			stringBuffer.append(str);
+		}
+		responseString = stringBuffer.toString();
+		JSONObject jsonObj=JSONObject.fromObject(responseString);
+		String redirectUrl=jsonObj.get("redirectUrl")+"";
+		System.out.println(">>>:"+responseString);
+		jsonview.setProperty("result", responseString);
+		 return  jsonview;  
 	}
 	
 }
